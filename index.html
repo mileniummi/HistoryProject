@@ -33,126 +33,14 @@
         <button class="button-map epoch-selector__button" data-type="People">
             Люди
         </button>
-        <button class="button-map epoch-selector__button" data-type="Docks">
-            Верфи
-        </button>
         <button class="button-map epoch-selector__button" data-type="Battles">
             Битвы
         </button>
+        <button class="button-map epoch-selector__button" data-type="SHIPS">
+            Корабли
+        </button>
     </div>
-    <script>
-        class HistoryObject {
-            constructor(x, y, description, name, date, group, podval) {
-                this.location = [x, y];
-                this.description = description;
-                this.name = name;
-                this.date = date;
-                this.group = group;
-                this.podval = podval;
-            }
-            getLocation() {
-                return this.location;
-            }
-            getDescription() {
-                return this.description;
-            }
-            getName() {
-                return this.name;
-            }
-            getDate() {
-                return this.date;
-            }
-            getGroup() {
-                return this.group;
-            }
-            getPodval() {
-                return this.podval;
-            }
-        }
-        class MyMap {
-            constructor(id) {
-                this.id = id;
-                this.data = {
-                    "ARCH": [
-                        new HistoryObject(
-                            56.72512028812886,
-                            38.77172404641613,
-                            "Тут до сих пор хранится Ботик Петра 1. Единственный уцелевший корабль потешной флотилии. По легенде его сделал сам Петр 1",
-                            "Бортик Фортуна",
-                            new Date("01.01.1689"),
-                            "ARCH",
-                            "Тут должна быть дата"
-                        )
-                    ],
-                    "AZOV": [
-                        new HistoryObject(
-                            47.11554446651436,
-                            39.42133739999999,
-                            "Осада Азова показала необходимость создания регулярного флота. Во время осады турецкий флот просто привозил боеприпасы в крепость с моря делая осаду бессмысленной. Несколько кораблей собранных в Воронеже показали свою неэффективность противостоя большому флоту осман.",
-                            "Первая осада Азова",
-                            new Date("01.06.1695"),
-                            "AZOV"
-                        )
-                    ]
-                };
-                this.selected = [];
-            }
-            init() {
-                this.map = new ymaps.Map(this.id, {
-                    center: [55.76, 37.64],
-                    zoom: 7
-                });
-
-            }
-            render() {
-                this.map.geoObjects.removeAll();
-                this.selected.forEach((type) => {
-                    const historyObjects = this.data[type];
-                    historyObjects.forEach((historyObject) => {
-                        const myPlacemark = new ymaps.Placemark(historyObject.getLocation(), {
-                            // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
-                            balloonContentHeader: historyObject.getName(),
-                            balloonContentBody: historyObject.getDescription(),
-                            balloonContentFooter: historyObject.getDate(),
-                            hintContent: "Хинт метки"
-                        });
-                        this.map.geoObjects.add(myPlacemark);
-                    });
-                });
-            }
-            checkSelected(type) {
-                if (this.selected.indexOf(type) !== -1) {
-                    return true;
-                }
-                return false;
-            }
-            addSelected(type) {
-                this.selected.push(type);
-            }
-            removeSelected(type) {
-                this.selected.splice(this.selected.indexOf(type), 1);
-            }
-        }
-        const myMap = new MyMap("map");
-        ymaps.ready((ymaps) => {
-            myMap.init();
-            document.addEventListener("click", (event) => {
-                if (!event.target.classList.contains("epoch-selector__button")) {
-                    return;
-                }
-                const type = event.target.getAttribute("data-type");
-                if (myMap.checkSelected(type)) {
-                    myMap.removeSelected(type);
-                    event.target.classList.remove("button-map_clicked");
-                } else {
-                    myMap.addSelected(type);
-                    event.target.classList.add("button-map_clicked");
-                }
-                myMap.render();
-            });
-        });
-
-    </script>
+    <script src="javascript/map-helper.js"> </script>
 </body>
 
 </html>
