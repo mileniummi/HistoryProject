@@ -471,6 +471,7 @@ class MyMap {
         this.selected = [];
     }
 
+
     init() {
         this.map = new ymaps.Map(this.id, {
             center: [55.76, 37.64],
