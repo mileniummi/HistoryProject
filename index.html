@@ -42,12 +42,13 @@
     </div>
     <script>
         class HistoryObject {
-            constructor(x, y, description, name, date, group) {
+            constructor(x, y, description, name, date, group, podval) {
                 this.location = [x, y];
                 this.description = description;
                 this.name = name;
                 this.date = date;
                 this.group = group;
+                this.podval = podval;
             }
             getLocation() {
                 return this.location;
@@ -64,6 +65,9 @@
             getGroup() {
                 return this.group;
             }
+            getPodval() {
+                return this.podval;
+            }
         }
         class MyMap {
             constructor(id) {
@@ -76,7 +80,8 @@
                             "Тут до сих пор хранится Ботик Петра 1. Единственный уцелевший корабль потешной флотилии. По легенде его сделал сам Петр 1",
                             "Бортик Фортуна",
                             new Date("01.01.1689"),
-                            "ARCH"
+                            "ARCH",
+                            "Тут должна быть дата"
                         )
                     ],
                     "AZOV": [
@@ -108,7 +113,7 @@
                             // Чтобы балун и хинт открывались на метке, необходимо задать ей определенные свойства.
                             balloonContentHeader: historyObject.getName(),
                             balloonContentBody: historyObject.getDescription(),
-                            balloonContentFooter: "Подвал",
+                            balloonContentFooter: historyObject.getDate(),
                             hintContent: "Хинт метки"
                         });
                         this.map.geoObjects.add(myPlacemark);
